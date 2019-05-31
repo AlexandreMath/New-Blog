@@ -13,7 +13,12 @@
 <body>
     <nav class="uw-bar uw-green">
         <a href="<?= $router->url('home');?>" class="uw-bar-item uw-button uw-mobile uw-large">Mon site</a>
+        <a href="<?= $router->url('contact');?>" class="uw-bar-item uw-mobile">Contacter</a>
+        <?php if(!isset($_SESSION['Admin'])): ?>
         <a href="<?= $router->url('admin');?>" class="uw-bar-item uw-hover-text-orange uw-mobile uw-right">Se connecter</a>
+        <?php else: ?>
+        <a href="<?= $router->url('logout');?>" class="uw-bar-item uw-hover-text-orange uw-mobile uw-right">Se deconnecter</a>
+        <?php endif; ?>
     </nav>
     <main class="uw-container uw-margin-top">
         <?= $content ?>

@@ -1,7 +1,7 @@
 <?php 
-
+session_start();
 use App\URL;
-use App\PaginatedQuery;
+use App\Controller\PaginatedQuery;
 use App\Model\Post;
 
 $title = 'Mon blog';

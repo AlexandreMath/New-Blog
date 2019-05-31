@@ -1,17 +1,15 @@
 <?php 
 use App\Connection;
-use App\Model\Category;
-use App\Model\Post;
+use App\Model\{Category, Post};
+use App\Controller\ImagesController;
 
 $id = (int)$params['id'];
 $slug = $params['slug'];
+//Recupere les posts
+$pdo = new Connection();
 
-$pdo = Connection::getPDO();
-$query = $pdo->prepare('SELECT * FROM post WHERE id=:id');
-$query->execute(['id' => $id]);
-$query->setFetchMode(PDO::FETCH_CLASS, Post::class);
-/** @var POST|FALSE */
-$post = $query->fetch();
+
+$post = $pdo->loadPost($id);
 
 if($post === FALSE){
     throw new \Exception("Aucun article ne correspond à cet ID"); 
@@ -22,11 +20,12 @@ if ($post->getSlug() !== $slug) {
     http_response_code(301);
     header('Location:' . $url);
 }
-// Récupère les catégories
-$res = $pdo->prepare('SELECT c.id, c.name, c.slug FROM post_category pc JOIN category c ON pc.category_id = c.id WHERE pc.post_id=:id');
-$res->execute(['id' => $post->getId()]);
-$res->setFetchMode(PDO::FETCH_CLASS, Category::class);
-$categories = $res->fetchAll();
+
+$categories = $pdo->loadCategories($post->getId());
+
+//recup les images
+$image = new ImagesController($post->getId());
+$postImg = $image->getImages();
 
 $title = $post->getName();
 ?>
@@ -39,5 +38,8 @@ $title = $post->getName();
     <?php endforeach; ?>
     <div class="uw-container">
         <p><?= $post->getContent(); ?></p>
+        <?php if($postImg): ?>
+            <img src="<?='../' . $postImg->getSrc(); ?>" class="uw-margin-bottom" style="width:100px;height:100px;">
+        <?php endif ?>
     </div>
 </section>

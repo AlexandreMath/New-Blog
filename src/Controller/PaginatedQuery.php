@@ -1,6 +1,8 @@
 <?php
-namespace App;
+namespace App\Controller;
 
+use App\Connection;
+use App\URL;
 use \PDO;
 
 class PaginatedQuery

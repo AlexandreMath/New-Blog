@@ -24,6 +24,10 @@ $router = new App\Router(dirname(__DIR__) . '/views');
 $router->get('/', 'post/index', 'home')
     ->get('/blog/category/[*:slug]-[i:id]', 'category/show', 'category')
     ->get('/article/[*:slug]-[i:id]', 'post/show', 'post')
-    ->get('/admin/', 'admin/index', 'admin')
+    ->get('/admin', 'admin/index', 'admin')
     ->get('/login', 'login/login', 'login')
+    ->get('/logout', 'login/logout', 'logout')
+    ->get('/contact', 'pages/contact', 'contact')
+    ->post('/login', 'login/login', 'check')
+    ->post('/contact', 'pages/contact', 'email')
     ->run();

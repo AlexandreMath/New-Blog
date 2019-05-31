@@ -1,17 +1,14 @@
 <?php 
 use App\Connection;
-use App\PaginatedQuery;
+use App\Controller\PaginatedQuery;
 use App\Model\{Category, Post};
 
 $id = (int)$params['id'];
 $slug = $params['slug'];
 
-$pdo = Connection::getPDO();
-$query = $pdo->prepare('SELECT * FROM category WHERE id=:id');
-$query->execute(['id' => $id]);
-$query->setFetchMode(PDO::FETCH_CLASS, Category::class);
-/** @var POST|FALSE */
-$category = $query->fetch();
+$pdo = new Connection();
+
+$category = $pdo->loadCategory($id);
 
 if($category === FALSE){
     throw new \Exception("Aucune catégorie ne correspond à cet ID"); 
