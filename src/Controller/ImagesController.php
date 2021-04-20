@@ -22,9 +22,9 @@ class ImagesController
         return $this->pdo->loadImages($this->postId);
     }
 
-    public function addImages()
+    public function addImages(string $src, string $name)
     {
-        //
+        return $this->pdo->insertImages($name, $src, $this->postId); 
     }
     public function deleteImages()
     {

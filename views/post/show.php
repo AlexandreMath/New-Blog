@@ -21,7 +21,7 @@ if ($post->getSlug() !== $slug) {
     header('Location:' . $url);
 }
 
-$categories = $pdo->loadCategories($post->getId());
+$categories = $pdo->loadCategory($post->getId());
 
 //recup les images
 $image = new ImagesController($post->getId());

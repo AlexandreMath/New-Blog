@@ -29,6 +29,16 @@ $posts = $paginatedQuery->getItems(Post::class);
 
 $title = "Catégorie {$category->getName()}";
 $link = $router->url('category', ['slug' => $category->getSlug(), 'id' => $category->getID()]);
+
+$postsById = [];
+foreach ($posts as $post){
+    $postsById[$post->getId()] = $post;
+}
+$categories = $pdo->loadCategories(array_keys($postsById));
+foreach($categories as $category){
+    $postsById[$category->getPostId()]->addCategory($category);
+        
+}
 ?>
 <h1><?= htmlentities($title); ?></h1>
 <section class="uw-container uw-row-padding uw-margin">

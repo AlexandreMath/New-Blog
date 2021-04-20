@@ -10,5 +10,12 @@ class Security
     $data = htmlentities($data);
     return $data;
   }
-    
+
+  public function sameContent($base, $new): bool
+  {
+    if ($base !== $new) {
+      return TRUE;
+    }
+    return FALSE;
+  }
 }

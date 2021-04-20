@@ -6,8 +6,6 @@ class MailController
     
     private $UWmail;
     private $EOL;
-    private $FinalMessage;
-    private $header;
     
     public function __construct()
     {

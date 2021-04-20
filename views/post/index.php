@@ -1,8 +1,11 @@
 <?php 
 session_start();
+use App\Connection;
 use App\URL;
 use App\Controller\PaginatedQuery;
 use App\Model\Post;
+
+$pdo = new Connection();
 
 $title = 'Mon blog';
 
@@ -11,6 +14,15 @@ $paginatedQuery = new PaginatedQuery(
     "SELECT COUNT(id) FROM post"
 );
 $posts = $paginatedQuery->getItems(Post::class);
+$postsById = [];
+foreach ($posts as $post){
+    $postsById[$post->getId()] = $post;
+}
+$categories = $pdo->loadCategories(array_keys($postsById));
+foreach($categories as $category){
+    $postsById[$category->getPostId()]->addCategory($category);
+        
+}
 $link = $router->url('home');
 ?>
 <h1 class="uw-padding-small">Mon Blog</h1>

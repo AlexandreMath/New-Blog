@@ -9,6 +9,8 @@ class Category
 
     private $slug;
 
+    private $post_id;
+
     /**
      * Get the value of id
      */ 
@@ -67,5 +69,29 @@ class Category
         $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * Get the value of post_id
+     */ 
+    public function getPostId(): ?Int
+    {
+        return $this->post_id;
+    }
+
+    /**
+     * Set the value of post_id
+     *
+     * @return  self
+     */ 
+    public function setPostId($post_id)
+    {
+        $this->post_id = $post_id;
+
+        return $this;
+    }
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
     }
 }

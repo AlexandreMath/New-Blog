@@ -46,8 +46,10 @@ class Router
         ob_start();
         require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
         $content = ob_get_clean();
-        require $this->viewPath . DIRECTORY_SEPARATOR . 'layouts/default.php';
-        
+        if($match['name'] === 'admin'){
+            require $this->viewPath . DIRECTORY_SEPARATOR . 'admin/dashboard.php';
+        }
+        else{ require $this->viewPath . DIRECTORY_SEPARATOR . 'layouts/default.php'; }
         return $this;
     }
 }

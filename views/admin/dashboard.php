@@ -7,24 +7,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <link href="https://fonts.googleapis.com/css?family=Cardo:700|Montserrat:400,700" rel="stylesheet"> 
     <link rel="stylesheet" href="<?= $css .'UWCSS.css'?>">
-    <link rel="stylesheet" href="<?= $css .'style.css'?>">
+    <link rel="stylesheet" href="<?= $css .'admin.css'?>">
     <title><?= isset($title) ? htmlentities($title) : 'Mon site' ?></title>
 </head>
 <body>
-    <nav class="uw-bar uw-green">
-        <a href="<?= $router->url('home');?>" class="uw-bar-item uw-button uw-mobile uw-large">Mon site</a>
-        <a href="<?= $router->url('contact');?>" class="uw-bar-item uw-mobile">Contact</a>
-        <?php if(!isset($_SESSION['Admin'])): ?>
-        <a href="<?= $router->url('admin');?>" class="uw-bar-item uw-hover-text-orange uw-mobile uw-right">Se connecter</a>
-        <?php else: ?>
-        <a href="<?= $router->url('admin');?>" class="uw-bar-item uw-hover-text-orange uw-mobile">Administration</a>
-        <a href="<?= $router->url('logout');?>" class="uw-bar-item uw-hover-text-orange uw-mobile uw-right">Se deconnecter</a>
-        <?php endif; ?>
-    </nav>
-    <main class="uw-container uw-margin-top">
-        <?= $content ?>
+    <?php require 'sidebar.php'; ?>
+    <main class="uw-main">
+        <?php require 'header.php'; 
+         echo $content ?>
     </main>
-
     <footer class="uw-container uw-light-grey footer uw-padding uw-bottom"> 
         <div class="uw-container">
         <?php if(defined('DEBUG_TIME')): ?>
@@ -32,5 +23,22 @@
         <?php endif ?>
         </div>
     </footer>
+    <script>
+        let mySidebar = document.getElementById("mySidebar");
+        let overlayBg = document.getElementById("myOverlay");
+        function uw_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+            }
+        }
+        function uw_close() {
+            mySidebar.style.display = "none";
+            overlayBg.style.display = "none";
+        }
+    </script>
 </body>
 </html>
